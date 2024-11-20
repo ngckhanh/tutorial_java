@@ -1,4 +1,6 @@
-public class FullTimeStudent extends Student implements Researcher{
+package question2;
+
+public class FullTimeStudent extends Student implements Researcher {
     private Project joinedProject;
     private String researchProfile;
 
@@ -30,7 +32,7 @@ public class FullTimeStudent extends Student implements Researcher{
 
     @Override
     public boolean joinProject(Project p) {
-        if (this.joinedProject == null && p.isNotFull()) {
+        if (this.joinedProject == null && !p.getMembers().contains(this)) {
             this.joinedProject = p;
             p.setMember(this);
             return true;

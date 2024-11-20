@@ -1,8 +1,4 @@
-/**
- * Test program for the implementation of Lecturer and Project
- * @author COSC2440 Teaching Team
- * @version 1.0
- */
+package question1;
 
 public class SchoolSystem {
 
@@ -36,10 +32,20 @@ public class SchoolSystem {
         // Must display true
         b = p1.addMember(student2);
         System.out.println(b);
-        System.out.println();
 
-        // Must display lecturer1 as a leader and lecturer2 and lecturer3 as members
-        lecturer2.joinProject(p1);
+        // Must display false (student2 is already in project p1)
+        b = p2.addMember(student2);
+        System.out.println(b);
+
+        // Must display true
+        b = lecturer2.joinProject(p1);
+        System.out.println(b);
+
+        // Must display false (lecturer2 is already in project p1)
+        b = p1.addMember(lecturer2);
+        System.out.println(b);
+
+        // Must display lecturer1 as a leader and lecturer2 and two students as members
         p1.displayMembers();
 
     }

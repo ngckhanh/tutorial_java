@@ -1,31 +1,36 @@
+package question4;
 
-/**
- * @author COSC2440 Teaching Team
- * @version 1.0
- */
-public class Lecturer implements Researcher{
+// Import library for Collection
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Lecturer implements Researcher {
     private String employeeId;
     private String fullName;
     private String rank;
     private Project projectLed;
     // assume the maximum number of projects a lecturer can join at one time is 10
-    private final int MAX_PROJECTS = 10;
-    private Project[] joinedProjects;
-    private int projectCount = 0;
+    //private final int MAX_PROJECTS = 10;
+    //private Project[] joinedProjects;
+    //private int projectCount = 0;
+    private List<Project> joinedProjects;
     private String researchProfile;
 
     public Lecturer()  {
         this.employeeId = "Default";
         this.fullName = "Default";
         this.rank = "Default";
-        joinedProjects = new Project[MAX_PROJECTS];
+        //joinedProjects = new Project[MAX_PROJECTS];
+        joinedProjects = new ArrayList<Project>();
         this.researchProfile = "";
     }
     public Lecturer(String employeeId, String fullName, String rank) {
         this.employeeId = employeeId;
         this.fullName = fullName;
         this.rank = rank;
-        joinedProjects = new Project[MAX_PROJECTS];
+        //joinedProjects = new Project[MAX_PROJECTS];
+        joinedProjects = new ArrayList<Project>();
         this.researchProfile = "";
     }
 
@@ -53,13 +58,13 @@ public class Lecturer implements Researcher{
         return false;
     }
 
-    public int getProjectCount() {
-        return projectCount;
-    }
+    //public int getProjectCount() {
+    //    return projectCount;
+    //}
 
-    public void setProjectCount(int projectCount) {
-        this.projectCount = projectCount;
-    }
+    //public void setProjectCount(int projectCount) {
+    //    this.projectCount = projectCount;
+    //}
 
     /**
      * assign the current lecturer as a member of a project
@@ -73,14 +78,12 @@ public class Lecturer implements Researcher{
      */
     @Override
     public boolean joinProject(Project p) {
-        // Short-circuit evaluation, if the first condition is false
-        // the second condition will not be evaluated
-        if (projectCount < 10) {
-            this.joinedProjects[projectCount++] = p;
-            p.setMember(this);
-            return true;
+        if (p.getMembers().contains(this)){
+            return false;
         }
-        return false;
+        joinedProjects.add(p);
+        p.setMember(this);
+        return true;
     }
 
     @Override
@@ -92,6 +95,7 @@ public class Lecturer implements Researcher{
     public String getProfile() {
         return this.researchProfile;
     }
+
 
     /**
      * check if the current lecturer is leading any project
@@ -113,7 +117,7 @@ public class Lecturer implements Researcher{
         return rank;
     }
 
-    public Project[] getJoinedProjects() {
+    public List<Project> getJoinedProjects() {
         return joinedProjects;
     }
 
@@ -153,5 +157,47 @@ public class Lecturer implements Researcher{
         // String.format() is similar to printf, but it return instead of display
         return String.format("Id: %s, Name: %s, Rank: %s",
                 employeeId, fullName, rank);
+    }
+
+    /**
+     * compare two lecturer objects
+     * <p>
+     * Two lecturer objects are equal if they contain the same employee ids
+     * otherwise, return false
+     * </p>
+     * @param other an object that compare with
+     * @return true if two lecturers have the same ids, otherwise, return false
+     */
+    @Override
+    public boolean equals(Object other) {
+
+        // If the object is compared with itself then return true
+        if (other == this) {
+            return true;
+        }
+
+    /* Check if other is an instance of Lecturer or not
+      "null instanceof [type]" also returns false */
+        if (!(other instanceof Lecturer)) {
+            return false;
+        }
+
+        // typecast other to Project so that we can compare data members
+        Lecturer otherLecturer = (Lecturer) other;
+
+        // Compare student ids and return accordingly
+        return this.employeeId.equals(otherLecturer.employeeId);
+    }
+
+    // The contract between equals() and hashCode() is:
+    // 1) If two objects are equal, then they must have the same hash code.
+    // 2) If two objects have the same hash code, they may or may not be equal.
+    @Override
+    public int hashCode() {
+        return this.employeeId.length();
+    }
+
+    public String getId() {
+        return employeeId;
     }
 }

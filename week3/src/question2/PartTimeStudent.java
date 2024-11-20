@@ -1,3 +1,5 @@
+package question2;
+
 public class PartTimeStudent extends Student {
     private int minHour;
     private int maxHour;

@@ -1,3 +1,4 @@
+package question4;
 public abstract class Student {
     private String name;
     private String major;
